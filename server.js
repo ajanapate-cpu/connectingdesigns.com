@@ -56,6 +56,7 @@ const publicFiles = new Map([
     ["/how-to-order.html", "how-to-order.html"],
     ["/connecting-logo.png", "connecting-logo.png"],
     ["/connecting-cursor.png", "connecting-cursor.png"],
+    ["/favicon.png", "favicon.png"],
     ["/logo-background.png", "logo-background.png"],
     ["/zyvro-avatar.png", "zyvro-avatar.png"],
     ["/itzveltrix8x-avatar.png", "itzveltrix8x-avatar.png"],
