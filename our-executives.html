@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Executives | Connecting Designs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        body * {
+            cursor: url("connecting-cursor.png") 10 26, auto !important;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #08090c;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("connecting-logo.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 1rem 2rem;
+            background: #000;
+        }
+
+        header a {
+            color: #f5f5f5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        header a:hover,
+        header a:focus-visible {
+            text-decoration: underline;
+        }
+
+        main {
+            min-height: calc(100vh - 3.5rem);
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+        }
+
+        .executives-card {
+            width: min(100%, 1000px);
+            padding: clamp(2rem, 5vw, 4rem);
+            border: 1px solid #454a55;
+            border-radius: 1.5rem;
+            background: rgba(10, 11, 14, 0.94);
+            text-align: center;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+
+        .executive-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 2rem;
+        }
+
+        .executive-profile img {
+            display: block;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1rem;
+            border: 3px solid #454a55;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .executive-profile h2 {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html">← Back</a>
+    </header>
+
+    <main>
+        <section class="executives-card" aria-labelledby="executives-title">
+            <h1 id="executives-title">Our Executives</h1>
+            <div class="executive-list">
+                <article class="executive-profile">
+                    <img src="zyvro-avatar.png" alt="Zyvro's profile picture">
+                    <h2>Zyvro</h2>
+                </article>
+                <article class="executive-profile">
+                    <img src="itzveltrix8x-avatar.png" alt="itzveltrix8x's profile picture">
+                    <h2>itzveltrix8x</h2>
+                </article>
+                <article class="executive-profile">
+                    <img src="mason-avatar.png" alt="Mason's profile picture">
+                    <h2>Mason</h2>
+                </article>
+                <article class="executive-profile">
+                    <img src="aj-avatar.png" alt="AJ's profile picture">
+                    <h2>AJ</h2>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

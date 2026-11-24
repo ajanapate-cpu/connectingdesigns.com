@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connecting Designs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        body * {
+            cursor: url("connecting-cursor.png") 10 26, auto !important;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #08090c;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("connecting-logo.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .intro-screen {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            min-height: 100vh;
+            min-height: 100dvh;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: auto;
+            background: #050811;
+            color: #f5f5f5;
+            text-align: center;
+        }
+
+        .intro-screen[hidden],
+        #website-content[hidden] {
+            display: none;
+        }
+
+        .intro-logo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: intro-logo-enter 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+            padding: 2rem 1rem clamp(2rem, 8vh, 5rem);
+            background: linear-gradient(transparent, rgba(5, 8, 17, 0.9));
+        }
+
+        .intro-title {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            letter-spacing: 0.08em;
+            animation: intro-title-enter 0.7s ease 0.45s both;
+        }
+
+        .continue-button {
+            padding: 0.9rem 2rem;
+            border: 1px solid #aeb4c0;
+            border-radius: 999px;
+            background: #252830;
+            color: #fff;
+            font: 700 1.1rem Arial, sans-serif;
+            animation: intro-title-enter 0.7s ease 0.7s both;
+        }
+
+        .continue-button:hover {
+            background: #363a44;
+        }
+
+        .continue-button:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .intro-screen.is-leaving {
+            opacity: 0;
+            transition: opacity 0.45s ease;
+            pointer-events: none;
+        }
+
+        #website-content:not([hidden]) {
+            animation: website-enter 0.6s ease both;
+        }
+
+        @keyframes intro-logo-enter {
+            from {
+                opacity: 0;
+                transform: scale(0.72) rotate(-8deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes intro-title-enter {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes website-enter {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .intro-logo,
+            .intro-title,
+            .continue-button,
+            #website-content:not([hidden]) {
+                animation: none;
+            }
+
+            .intro-screen.is-leaving {
+                transition: none;
+            }
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 560px) minmax(0, 1fr);
+            align-items: center;
+            padding: 0.75rem 2rem;
+            background: #000;
+        }
+
+        .header-actions {
+            grid-column: 3;
+            justify-self: end;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .discord-link {
+            padding: 0.75rem 1rem;
+            border: 1px solid #454a55;
+            border-radius: 999px;
+            background: #252830;
+            color: #f5f5f5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .staff-login-trigger {
+            padding: 0.75rem 1rem;
+            border: 1px solid #aeb4c0;
+            border-radius: 999px;
+            background: #15171c;
+            color: #fff;
+            font: 700 1rem Arial, sans-serif;
+        }
+
+        .discord-link:hover,
+        .discord-link:focus-visible,
+        .staff-login-trigger:hover {
+            background: #363a44;
+        }
+
+        .staff-login-trigger:focus-visible,
+        .staff-dialog button:focus-visible,
+        .staff-dialog input:focus-visible {
+            outline: 3px solid #aebfe8;
+            outline-offset: 3px;
+        }
+
+        .staff-dialog {
+            width: min(calc(100% - 2rem), 460px);
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid #454a55;
+            border-radius: 1rem;
+            background: #101217;
+            color: #f5f5f5;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+        }
+
+        .staff-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.78);
+        }
+
+        .staff-dialog h2 {
+            margin-bottom: 1rem;
+        }
+
+        .staff-dialog p {
+            line-height: 1.6;
+        }
+
+        .staff-dialog .staff-warning,
+        .staff-dialog .staff-status {
+            margin-top: 1rem;
+            color: #f0b5b5;
+        }
+
+        .staff-dialog .staff-status:empty {
+            display: none;
+        }
+
+        .staff-dialog label {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+
+        .staff-dialog input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #454a55;
+            border-radius: 0.5rem;
+            background: #15171c;
+            color: #f5f5f5;
+            font: inherit;
+        }
+
+        .staff-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .staff-dialog-actions button {
+            padding: 0.7rem 1rem;
+            border: 1px solid #454a55;
+            border-radius: 0.5rem;
+            background: #252830;
+            color: #f5f5f5;
+            font: 700 1rem Arial, sans-serif;
+        }
+
+        .staff-dialog-actions button:hover {
+            background: #363a44;
+        }
+
+        .staff-step[hidden] {
+            display: none;
+        }
+
+        .site-search {
+            grid-column: 2;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .site-search input {
+            flex: 1;
+            min-width: 0;
+            padding: 0.85rem 1.1rem;
+            border: 1px solid #454a55;
+            border-radius: 999px;
+            background: #15171c;
+            color: #f5f5f5;
+            font: inherit;
+        }
+
+        .site-search button {
+            padding: 0.85rem 1.1rem;
+            border: 1px solid #454a55;
+            border-radius: 999px;
+            background: #252830;
+            color: #f5f5f5;
+            font: inherit;
+            font-weight: 700;
+        }
+
+        .site-search button:hover {
+            background: #363a44;
+        }
+
+        .site-search input::placeholder {
+            color: #c1c5ce;
+        }
+
+        .site-search input:focus-visible {
+            outline: 3px solid #aebfe8;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 700px) {
+            .site-header {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 0.75rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .header-actions {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .site-search {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .website {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: #f5f5f5;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-family: "Segoe Script", "Brush Script MT", cursive;
+            line-height: 1.05;
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.8);
+        }
+
+        .find-more {
+            padding: 0.9rem 1.8rem;
+            border: 2px solid #aeb4c0;
+            border-radius: 999px;
+            background-color: #15171c;
+            color: #fff;
+            font: 700 1.25rem Arial, sans-serif;
+            animation: spin-into-view 1.2s ease-out 0.2s both;
+        }
+
+        .find-more:hover {
+            background-color: #292d35;
+        }
+
+        .find-more:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+
+        @keyframes spin-into-view {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotate(-360deg) scale(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0) scale(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .find-more {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="intro-screen" id="intro-screen" aria-labelledby="intro-title">
+        <img class="intro-logo" src="connecting-logo.png" alt="Connecting Designs logo">
+        <div class="intro-content">
+            <h1 class="intro-title" id="intro-title">Connecting Designs</h1>
+            <button class="continue-button" id="continue-button" type="button">Continue</button>
+        </div>
+    </section>
+
+    <div id="website-content" hidden>
+    <header class="site-header">
+        <form class="site-search" role="search">
+            <label class="visually-hidden" for="site-search-input">Search with ConnectingAI</label>
+            <input id="site-search-input" type="search" placeholder="Search with ConnectingAI">
+            <button type="submit">Search</button>
+            <p class="visually-hidden" id="search-status" aria-live="polite"></p>
+        </form>
+        <div class="header-actions">
+            <a class="discord-link" href="https://discord.gg/kjQyB5vnEp" target="_blank" rel="noopener noreferrer">Join Discord</a>
+            <button class="staff-login-trigger" id="staff-login-trigger" type="button">Staff Login</button>
+        </div>
+    </header>
+
+    <main class="website">
+
+        <h1 tabindex="-1">Connecting Designs</h1>
+        <button class="find-more" type="button">Find more here</button>
+
+    </main>
+    </div>
+
+    <dialog class="staff-dialog" id="staff-dialog" aria-labelledby="staff-dialog-title">
+        <section class="staff-step" id="staff-confirmation">
+            <h2 id="staff-dialog-title">Staff Login</h2>
+            <p>Are you sure you are a staff member? If not, please exit this category. If you are staff, please go ahead.</p>
+            <div class="staff-dialog-actions">
+                <button id="staff-exit" type="button">Exit</button>
+                <button id="staff-continue" type="button">Continue</button>
+            </div>
+        </section>
+
+        <form class="staff-step" id="staff-login-form" hidden>
+            <h2>Staff Sign In</h2>
+            <p class="staff-warning">Your credentials are checked by the website server and are not stored in this page.</p>
+            <label for="staff-username">Username</label>
+            <input id="staff-username" name="username" type="text" placeholder="name@executive" autocomplete="off" required>
+            <label for="staff-password">Password</label>
+            <input id="staff-password" name="password" type="password" autocomplete="off" required>
+            <p class="staff-status" id="staff-status" role="status" aria-live="polite"></p>
+            <div class="staff-dialog-actions">
+                <button id="staff-back" type="button">Back</button>
+                <button type="submit">Sign In</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        const introScreen = document.querySelector("#intro-screen");
+        const continueButton = document.querySelector("#continue-button");
+        const websiteContent = document.querySelector("#website-content");
+        const homeHeading = document.querySelector(".website h1");
+
+        continueButton.addEventListener("click", () => {
+            websiteContent.hidden = false;
+            introScreen.classList.add("is-leaving");
+            introScreen.setAttribute("aria-hidden", "true");
+            homeHeading.focus();
+
+            window.setTimeout(() => {
+                introScreen.hidden = true;
+            }, 450);
+        });
+
+        const staffDialog = document.querySelector("#staff-dialog");
+        const staffLoginTrigger = document.querySelector("#staff-login-trigger");
+        const staffConfirmation = document.querySelector("#staff-confirmation");
+        const staffLoginForm = document.querySelector("#staff-login-form");
+        const staffUsername = document.querySelector("#staff-username");
+        const staffPassword = document.querySelector("#staff-password");
+        const staffStatus = document.querySelector("#staff-status");
+
+        staffLoginTrigger.addEventListener("click", () => {
+            staffConfirmation.hidden = false;
+            staffLoginForm.hidden = true;
+            staffStatus.textContent = "";
+            staffLoginForm.reset();
+            staffDialog.showModal();
+        });
+
+        document.querySelector("#staff-exit").addEventListener("click", () => {
+            staffDialog.close();
+        });
+
+        document.querySelector("#staff-continue").addEventListener("click", () => {
+            staffConfirmation.hidden = true;
+            staffLoginForm.hidden = false;
+            staffUsername.focus();
+        });
+
+        document.querySelector("#staff-back").addEventListener("click", () => {
+            staffLoginForm.hidden = true;
+            staffConfirmation.hidden = false;
+            document.querySelector("#staff-continue").focus();
+        });
+
+        staffLoginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            staffStatus.textContent = "";
+            try {
+                const response = await fetch("/api/staff-login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: staffUsername.value,
+                        password: staffPassword.value
+                    })
+                });
+                const result = await response.json();
+                staffPassword.value = "";
+
+                if (!response.ok) {
+                    staffStatus.textContent = result.error || "Unable to sign in.";
+                    return;
+                }
+
+                window.location.assign(result.redirect);
+            } catch (error) {
+                staffPassword.value = "";
+                console.error("Staff login request failed:", error);
+                staffStatus.textContent = "The website server could not be reached. Start it with node server.js.";
+            }
+        });
+
+        const searchForm = document.querySelector(".site-search");
+        const searchInput = document.querySelector("#site-search-input");
+        const searchStatus = document.querySelector("#search-status");
+        const searchPrompts = [
+            "Search for 'Our message'",
+            "Search for 'Our Executives'",
+            "Search for 'Our partners'",
+            "Search for 'How to Order?'"
+        ];
+        let currentPrompt = 0;
+        let promptTimer;
+
+        function startPromptRotation() {
+            promptTimer = window.setInterval(() => {
+                if (!searchInput.value) {
+                    currentPrompt = (currentPrompt + 1) % searchPrompts.length;
+                    searchInput.placeholder = searchPrompts[currentPrompt];
+                }
+            }, 2500);
+        }
+
+        searchInput.placeholder = searchPrompts[currentPrompt];
+        startPromptRotation();
+
+        searchInput.addEventListener("focus", () => {
+            window.clearInterval(promptTimer);
+        });
+
+        searchInput.addEventListener("blur", () => {
+            if (!searchInput.value) {
+                startPromptRotation();
+            }
+        });
+
+        searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const query = searchInput.value.trim().toLowerCase();
+
+            if (query.includes("how to order")) {
+                window.location.href = "how-to-order.html";
+            } else if (query.includes("our executives")) {
+                window.location.href = "our-executives.html";
+            } else if (query.includes("our message")) {
+                window.location.href = "our-message.html";
+            } else {
+                searchStatus.textContent = 'No matching page found. Try "Our Message", "Our Executives", or "How to Order".';
+            }
+        });
+    </script>
+
+</body>
+</html>

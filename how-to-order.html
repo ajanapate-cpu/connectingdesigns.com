@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Order | Connecting Designs</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        body * {
+            cursor: url("connecting-cursor.png") 10 26, auto !important;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #08090c;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("connecting-logo.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 1rem 2rem;
+            background: #000;
+        }
+
+        header a {
+            color: #f5f5f5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        header a:hover,
+        header a:focus-visible {
+            text-decoration: underline;
+        }
+
+        main {
+            min-height: calc(100vh - 3.5rem);
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+        }
+
+        .order-card {
+            width: min(100%, 800px);
+            padding: clamp(2rem, 5vw, 4rem);
+            border: 1px solid #454a55;
+            border-radius: 1.5rem;
+            background: rgba(10, 11, 14, 0.94);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+
+        ol {
+            display: grid;
+            gap: 1.25rem;
+            padding-left: 1.5rem;
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            line-height: 1.7;
+        }
+
+        li::marker {
+            color: #c1c5ce;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html">← Back</a>
+    </header>
+
+    <main>
+        <article class="order-card" aria-labelledby="order-title">
+            <h1 id="order-title">How to Order</h1>
+            <ol>
+                <li>Order any asset you want through our Discord server only.</li>
+                <li>Payment is required before the finished work is handed over. We will show you the work in progress.</li>
+                <li>Our designers may take up to 3 days to complete an asset.</li>
+                <li>Please leave us a review when your order is complete.</li>
+            </ol>
+        </article>
+    </main>
+</body>
+</html>
